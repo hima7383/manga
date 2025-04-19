@@ -8,7 +8,6 @@ import 'package:mangaleya/widgets/manga_card.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../models/manga.dart';
 
-
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -35,7 +34,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels == 
+    if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       ref.read(homeProvider.notifier).loadMore();
     }
@@ -44,7 +43,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(homeProvider);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Manga Reader'),
@@ -71,7 +70,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (state.isLoading && state.manga.isEmpty) {
       return const Center(child: CircularProgressIndicator());
     }
-    
+
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
@@ -86,14 +85,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           sliver: SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 0.7,
+              childAspectRatio: 0.6,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
             ),
             delegate: SliverChildBuilderDelegate(
               (context, index) => MangaCard(
                 manga: state.manga[index],
-                onBookmark: (manga) => ref.read(homeProvider.notifier).toggleBookmark(manga),
+                onBookmark: (manga) =>
+                    ref.read(homeProvider.notifier).toggleBookmark(manga),
               ),
               childCount: state.manga.length,
             ),
@@ -114,8 +114,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: Text(
                   state.error!,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
+                        color: Theme.of(context).colorScheme.error,
+                      ),
                 ),
               ),
             ),

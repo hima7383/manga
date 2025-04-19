@@ -31,6 +31,7 @@ class MangaCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min, // This prevents overflow
           children: [
             Stack(
               children: [
@@ -59,17 +60,16 @@ class MangaCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                
                 // Bookmark button
                 Positioned(
                   top: 8,
                   right: 8,
                   child: IconButton(
                     icon: Icon(
-                      manga.isBookmarked 
-                          ? Icons.bookmark 
+                      manga.isBookmarked
+                          ? Icons.bookmark
                           : Icons.bookmark_border,
-                      color: manga.isBookmarked 
+                      color: manga.isBookmarked
                           ? Theme.of(context).colorScheme.secondary
                           : Colors.white,
                     ),
@@ -78,53 +78,36 @@ class MangaCard extends StatelessWidget {
                 ),
               ],
             ),
-            
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min, // Prevent inner overflow
                 children: [
                   Text(
                     manga.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
-                  
-                  const SizedBox(height: 4),
-                  
+                  const SizedBox(height: 2),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.star,
                         size: 16,
                         color: Colors.amber,
                       ),
+                      const SizedBox(width: 4),
                       Text(
-                        ' ${manga.rating.toStringAsFixed(1)}',
+                        manga.rating.toStringAsFixed(1),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const Spacer(),
-                      if (manga.latestChapter != null)
-                        Text(
-                          'Ch. ${manga.latestChapter}',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
                     ],
                   ),
-                  
-                  if (manga.updated != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Text(
-                        manga.updated!,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ),
                 ],
               ),
             ),
