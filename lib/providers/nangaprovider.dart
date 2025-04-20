@@ -21,7 +21,9 @@ class MangaNotifier extends StateNotifier<MangaState> {
     required this.mangaScraper,
     required this.cacheService,
   }) : super(MangaState.initial());
-
+void reset() {
+  state = MangaState.initial();
+}
   Future<void> loadMangaDetails(String url) async {
     try {
       state = state.copyWith(isLoading: true, error: null);
@@ -96,6 +98,7 @@ class MangaNotifier extends StateNotifier<MangaState> {
     
     state = state.copyWith(manga: updatedManga);
   }
+  
 }
 
 class MangaState {
